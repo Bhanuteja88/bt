@@ -164,38 +164,38 @@ subjects:
   - kind: ServiceAccount
     name: aqua-sa
     namespace: aqua
-# ---
-# # Create PV for the Aqua Database
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: aqua-db-pv
-#   namespace: aqua
-#   labels:
-#     for_pod: aqua-db
-# spec:
-#   persistentVolumeReclaimPolicy: Retain
-#   capacity:
-#     storage: 50Gi
-#   accessModes:
-#     - ReadWriteOnce
-# ---
-# # Create a PVC for the Aqua Database
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: aqua-db-pvc
-#   namespace: aqua
-# spec:
-#   selector:
-#     matchLabels:
-#       for_pod: aqua-db
-#   accessModes:
-#   - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 50Gi
-#   volumeName: aqua-db-pv
+ ---
+ # Create PV for the Aqua Database
+ apiVersion: v1
+ kind: PersistentVolume
+ metadata:
+   name: aqua-db-pv
+   namespace: aqua
+   labels:
+     for_pod: aqua-db
+ spec:
+   persistentVolumeReclaimPolicy: Retain
+   capacity:
+     storage: 50Gi
+   accessModes:
+     - ReadWriteOnce
+ ---
+ # Create a PVC for the Aqua Database
+ apiVersion: v1
+ kind: PersistentVolumeClaim
+ metadata:
+   name: aqua-db-pvc
+   namespace: aqua
+ spec:
+   selector:
+     matchLabels:
+       for_pod: aqua-db
+   accessModes:
+   - ReadWriteOnce
+   resources:
+     requests:
+       storage: 50Gi
+   volumeName: aqua-db-pv
 ---
 apiVersion: v1
 kind: Service
@@ -234,7 +234,7 @@ spec:
     spec:
       containers:
         - name: aqua-audit-db
-          image: registry.aquasec.com/database:6.2
+          image: aquadev.azurecr.io/database:6.5.preview7
           ports:
             - name: aqua-audit-db
               containerPort: 5432
@@ -324,7 +324,7 @@ spec:
     spec:
       containers:
         - name: aqua-db
-          image: registry.aquasec.com/database:6.2
+          image: aquadev.azurecr.io/database:6.5.preview7
           ports:
             - name: aqua-db
               containerPort: 5432
@@ -424,7 +424,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: aqua-web
-        image: registry.aquasec.com/console:6.2
+        image: aquadev.azurecr.io/console:6.5.preview7
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -527,7 +527,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: aqua-gateway
-        image: registry.aquasec.com/gateway:6.2
+        image: aquadev.azurecr.io/gateway:6.5.preview7
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -609,7 +609,7 @@ spec:
         envFrom:
         - configMapRef:
             name: aqua-csp-enforcer
-        image: registry.aquasec.com/enforcer:6.2
+        image: aquadev.azurecr.io/enforcer:6.5.preview7
         imagePullPolicy: Always
         livenessProbe:
           httpGet:

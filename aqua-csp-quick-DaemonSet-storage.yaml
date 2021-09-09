@@ -464,21 +464,21 @@ spec:
             secretKeyRef:
               key: password
               name: aqua-db
-      #   volumeMounts:
-      #   - mountPath: /opt/aquasec/ssl
-      #     name: aquasec-ssl
-      #     readOnly: true
-      # volumes:
-      # - name: aquasec-ssl
-      #   secret:
-      #     secretName: aqua-ssl
-      #     items:
-      #     - key: aqua.crt
-      #       path: cert.pem
-      #     - key: aqua.key
-      #       path: key.pem
-      #     - key: ca.crt
-      #       path: ca.pem
+         volumeMounts:
+         - mountPath: /opt/aquasec/ssl
+           name: aquasec-ssl
+           readOnly: true
+       volumes:
+       - name: aquasec-ssl
+         secret:
+           secretName: aqua-ssl
+           items:
+           - key: aqua.crt
+             path: cert.pem
+           - key: aqua.key
+             path: key.pem
+           - key: ca.crt
+             path: ca.pem
 ---
 apiVersion: v1
 kind: Service
@@ -559,21 +559,21 @@ spec:
             secretKeyRef:
               key: password
               name: aqua-audit-db
-      #   volumeMounts:
-      #   - mountPath: /opt/aquasec/ssl
-      #     name: aquasec-ssl
-      #     readOnly: true
-      # volumes:
-      # - name: aquasec-ssl
-      #   secret:
-      #     secretName: aqua-ssl
-      #     items:
-      #     - key: aqua.crt
-      #       path: cert.pem
-      #     - key: aqua.key
-      #       path: key.pem
-      #     - key: ca.crt
-      #       path: ca.pem
+         volumeMounts:
+         - mountPath: /opt/aquasec/ssl
+           name: aquasec-ssl
+           readOnly: true
+       volumes:
+       - name: aquasec-ssl
+         secret:
+           secretName: aqua-ssl
+           items:
+           - key: aqua.crt
+             path: cert.pem
+           - key: aqua.key
+             path: key.pem
+           - key: ca.crt
+             path: ca.pem
 ---
 apiVersion: apps/v1
 kind: DaemonSet

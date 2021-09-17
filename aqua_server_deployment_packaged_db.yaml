@@ -50,7 +50,7 @@ spec:
         envFrom:
         - configMapRef:
             name: aqua-csp-db-config
-        image: aquadev.azurecr.io/database:6.5.preview7
+        image: registry.aquasec.com/database:6.5.preview7
         command: [ "sh", "-c", "[ -f $PGDATA/server.key ] && chmod 600 $PGDATA/server.key || echo 'OK' " ]
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
@@ -59,7 +59,7 @@ spec:
       - name: aqua-db
         securityContext:
           privileged: false
-        image: aquadev.azurecr.io/database:6.5.preview7
+        image: registry.aquasec.com/database:6.5.preview7
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
@@ -133,7 +133,7 @@ spec:
         envFrom:
         - configMapRef:
             name: aqua-csp-db-config
-        image: aquadev.azurecr.io/database:6.5.preview7
+        image: registry.aquasec.com/database:6.5.preview7
         command: [ "sh", "-c", "[ -f $PGDATA/server.key ] && chmod 600 $PGDATA/server.key || echo 'OK' " ]
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
@@ -142,7 +142,7 @@ spec:
       - name: aqua-audit-db
         securityContext:
           privileged: false
-        image: aquadev.azurecr.io/database:6.5.preview7
+        image: registry.aquasec.com/database:6.5.preview7
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
@@ -190,7 +190,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: aqua-web
-        image: aquadev.azurecr.io/console:6.5.preview7
+        image: registry.aquasec.com/console:6.5.preview7
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -230,21 +230,21 @@ spec:
             secretKeyRef:
               key: password
               name: aqua-db
-      #   volumeMounts:
-      #   - mountPath: /opt/aquasec/ssl
-      #     name: aqua-grpc-web
-      #     readOnly: true
-      # volumes:
-      # - name: aqua-grpc-web
-      #   secret:
-      #     secretName: aqua-grpc-web
-      #     items:
-      #     - key: aqua_web.crt
-      #       path: cert.pem
-      #     - key: aqua_web.key
-      #       path: key.pem
-      #     - key: rootCA.crt
-      #       path: ca.pem
+        volumeMounts:
+         - mountPath: /opt/aquasec/ssl
+           name: aqua-grpc-web
+           readOnly: true
+      volumes:
+       - name: aqua-grpc-web
+         secret:
+           secretName: aqua-grpc-web
+           items:
+           - key: aqua_web.crt
+             path: cert.pem
+           - key: aqua_web.key
+             path: key.pem
+           - key: rootCA.crt
+             path: ca.pem
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -272,7 +272,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: aqua-gateway
-        image: aquadev.azurecr.io/gateway:6.5.preview7
+        image: registry.aquasec.com/gateway:6.5.preview7
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:

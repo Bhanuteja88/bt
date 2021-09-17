@@ -133,7 +133,7 @@ spec:
         envFrom:
         - configMapRef:
             name: aqua-csp-db-config
-        image: registry.aquasec.com/database:6.5.preview7
+        image: registry.aquasec.com/database:6.2
         command: [ "sh", "-c", "[ -f $PGDATA/server.key ] && chmod 600 $PGDATA/server.key || echo 'OK' " ]
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
